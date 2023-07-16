@@ -64,13 +64,16 @@ const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<
 
   const columnFilterValue = column.getFilterValue();
 
-  // get column id which is being filled
   const searchKey = (column.getFilterValue() && column.id) as string;
   const searchValue = column.getFilterValue() as string;
 
-  // undefined left 1 character
-  if (typeof searchKey !== "undefined" && typeof searchValue !== "undefined" && typeof window !== "undefined")
-    localStorage.setItem(searchKey, searchValue);
+  useEffect(() => {
+    // get column id which is being filled
+
+    // undefined left 1 character
+    if (typeof searchKey !== "undefined" && typeof searchValue !== "undefined")
+      localStorage.setItem(searchKey, searchValue);
+  }, [searchValue]);
 
   const sortedUniqueValues = useMemo(
     () => (typeof firstValue === "number" ? [] : Array.from(column.getFacetedUniqueValues().keys()).sort()),

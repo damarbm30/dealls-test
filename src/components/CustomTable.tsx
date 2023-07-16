@@ -115,7 +115,9 @@ const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<
       <DebouncedInput
         name={column.id}
         type="text"
-        value={(columnFilterValue ?? (typeof window !== "undefined" && localStorage.getItem(column.id))) as string}
+        value={
+          (columnFilterValue ?? (typeof window !== "undefined" ? localStorage.getItem(column.id) : "TES")) as string
+        }
         onChange={(value) => column.setFilterValue(value)}
         placeholder="Search"
         className="rounded border pl-2 shadow"

@@ -65,7 +65,7 @@ const CartDetail = async ({ params: { id } }: { params: { id: string } }) => {
             <h1 className="text-xl font-bold">Products of Cart {id}</h1>
           </div>
           {products.map((product) => (
-            <Product {...product} />
+            <Product key={product.id} {...product} />
           ))}
         </div>
       </div>

@@ -71,7 +71,7 @@ const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<
     // get column id which is being filled
 
     // undefined left 1 character
-    if (typeof searchKey !== "undefined" && typeof searchValue !== "undefined")
+    if (typeof searchKey !== "undefined" && typeof searchValue !== "undefined" && typeof window !== "undefined")
       localStorage.setItem(searchKey, searchValue);
   }, [searchValue]);
 

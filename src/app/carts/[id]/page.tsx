@@ -48,7 +48,7 @@ const CartDetail = async ({ params: { id } }: { params: { id: string } }) => {
           <div className="grid md:grid-cols-2">
             <div className="py-2">
               <p>
-                Buyer&apos;s name: {firstName} ${lastName}
+                Buyer&apos;s name: {firstName} {lastName}
               </p>
               <p>Buyer&apos;s email: {email}</p>
             </div>

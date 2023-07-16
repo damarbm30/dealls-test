@@ -50,7 +50,7 @@ const DebouncedInput = ({
 
       // remove item from local storage when it's empty
       // to handle undefined value
-      if (!value) localStorage.removeItem(props.name as string);
+      if (!value && typeof window !== "undefined") localStorage.removeItem(props.name as string);
     }, debounce);
 
     return () => clearTimeout(timeout);
@@ -69,7 +69,7 @@ const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<
   const searchValue = column.getFilterValue() as string;
 
   // undefined left 1 character
-  if (typeof searchKey !== "undefined" && typeof searchValue !== "undefined")
+  if (typeof searchKey !== "undefined" && typeof searchValue !== "undefined" && typeof window !== "undefined")
     localStorage.setItem(searchKey, searchValue);
 
   const sortedUniqueValues = useMemo(
@@ -83,7 +83,10 @@ const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<
         <DebouncedInput
           name={column.id}
           type="number"
-          value={(columnFilterValue as [number, number])?.[0] ?? localStorage.getItem(column.id)?.split(",")[0]}
+          value={
+            (columnFilterValue as [number, number])?.[0] ??
+            (typeof window !== "undefined" && localStorage.getItem(column.id)?.split(",")[0])
+          }
           onChange={(value) => column.setFilterValue((old: [number, number]) => [value, old?.[1]])}
           placeholder="Min"
           className="w-24 rounded border pl-2 shadow"
@@ -91,7 +94,10 @@ const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<
         <DebouncedInput
           name={column.id}
           type="number"
-          value={(columnFilterValue as [number, number])?.[1] ?? localStorage.getItem(column.id)?.split(",")[1]}
+          value={
+            (columnFilterValue as [number, number])?.[1] ??
+            (typeof window !== "undefined" && localStorage.getItem(column.id)?.split(",")[1])
+          }
           onChange={(value) => column.setFilterValue((old: [number, number]) => [old?.[0], value])}
           placeholder="Max"
           className="w-24 rounded border pl-2 shadow"

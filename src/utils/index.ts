@@ -1,6 +1,6 @@
 export async function fetchData(endpoint: string) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${endpoint}`, {
+    const response = await fetch(`${process.env.BASE_URL}${endpoint}`, {
       method: "GET",
       headers: {
         Accept: "application/json",

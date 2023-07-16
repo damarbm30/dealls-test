@@ -12,6 +12,7 @@ import {
   Table,
   ColumnDef,
 } from "@tanstack/react-table";
+import Link from "next/link";
 
 import { InputHTMLAttributes, useEffect, useMemo, useState } from "react";
 import { CartsType, ProductsType } from "~/types/common";
@@ -142,7 +143,7 @@ const CustomTable = ({ columns, data, page }: Props) => {
 
   return (
     <>
-      <table className="mb-4 max-w-full">
+      <table className="mx-auto mb-4 w-4/5">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -155,25 +156,43 @@ const CustomTable = ({ columns, data, page }: Props) => {
                       desc: " ⇩",
                     }[header.column.getIsSorted() as string] ?? null}
                   </div>
-                  {(isProductsExist || isCartsExist) && header.column.getCanFilter() && header.id !== "id" ? (
+                  {isProductsExist && header.column.getCanFilter() && header.id !== "id" ? (
                     <Filter column={header.column} table={table} />
                   ) : null}
                 </th>
               ))}
+              {isCartsExist && <th className="mb-2 px-2 pb-4">Actions</th>}
             </tr>
           ))}
         </thead>
         <tbody>
-          {(isProductsExist || isCartsExist) &&
+          {isProductsExist &&
             table.getRowModel().rows.map((row, idx) => (
               <tr key={row.id} className={`${idx % 2 === 0 ? "bg-secondary" : ""}`}>
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <td key={cell.id} className="px-4 py-2 text-center">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
+                    <>
+                      <td key={cell.id} className="px-4 py-2 text-center">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    </>
                   );
                 })}
+              </tr>
+            ))}
+          {isCartsExist &&
+            table.getRowModel().rows.map((row, idx) => (
+              <tr key={row.id} className={`${idx % 2 === 0 ? "bg-secondary" : ""}`}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="px-4 py-2 text-center">
+                    {/* <Link href={`/carts/${row.original.id + 1}`}> */}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {/* </Link> */}
+                  </td>
+                ))}
+                <td className="px-4 py-2 text-center font-bold text-primary">
+                  <Link href={`/carts/${row.original.id}`}>View detail</Link>
+                </td>
               </tr>
             ))}
         </tbody>

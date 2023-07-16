@@ -5,7 +5,10 @@ import { fetchData } from "~/utils";
 const Carts = async () => {
   const data = await fetchData("/carts");
 
-  // @ts-ignore
-  return <CustomTable columns={cartsColumns} data={data} page="carts" />;
+  return (
+    <div className="overflow-x-auto pb-8">
+      <CustomTable columns={cartsColumns} data={data} page="carts" />
+    </div>
+  );
 };
 export default Carts;

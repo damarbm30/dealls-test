@@ -7,10 +7,12 @@ const Products = async () => {
 
   return (
     <section>
-      <div className="mb-4">
+      <div className="overflow-x-auto pb-8">
         <CustomTable columns={productsColumns} data={data} page="products" />
       </div>
-      <Charts data={data.products} />
+      <div className="pt-8">
+        <Charts data={data.products} />
+      </div>
     </section>
   );
 };

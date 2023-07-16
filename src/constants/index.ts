@@ -42,12 +42,8 @@ export const cartsColumns = [
   cartsColumnHelper.accessor("products", {
     header: "Products",
     cell: ({ row }) => {
-      row.original.products.map((item) => {
-        return item.title;
-      });
-      //   console.log(row.original.products[0].title);
-
-      //   return row.original.products[0].title;
+      // @ts-ignore
+      return `${row.original.products[0].title} and ${row.original.products.length - 1} more`;
     },
     footer: (info) => info.column.id,
   }),
